@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICD Code Details</title>
+    <link href="index.css" rel="stylesheet">
+    <style>
+
+        h1 {
+            text-align: center;
+            color: #66b3ff;
+        }
+
+        .details {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            color: #66b3ff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 5px 0;
+            color: #cccccc;
+        }
+
+        .description {
+            background-color: #333;
+            border-left: 5px solid #66b3ff;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .no-details {
+            text-align: center;
+            font-size: 18px;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .details {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="web-name">MedDoc</h1>
+        <div class="search-container">
+            <input type="text" id="icdCode" placeholder="Enter ICD Code" class="search-bar">
+            <button class="btn search-btn" onclick="searchICD()">Search</button>&nbsp;
+            <button class="btn" id="login-btn">Login</button>
+            <div class="profile-dropdown" style="display: none;">
+                <i class="fas fa-user-circle profile-icon" onclick="toggleDropdown()"></i>
+                <div id="profileDropdown" class="dropdown-content">
+                    <a href="/profile.html">My Profile</a>
+                    <a href="#" onclick="handleLogout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <h1>ICD Code Details</h1>
+    <div class="details" id="icdDetails"></div>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const regex = /([^&=]+)=([^&]*)/g;
+            let match;
+            while ((match = regex.exec(queryString))) {
+                params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+            }
+            return params;
+        }
+
+        // Display ICD details
+        const params = getUrlParams();
+        const icdDetailsDiv = document.getElementById('icdDetails');
+        console.log("Printing params");
+        console.log(params);
+        if (params.code && params.description) {
+            icdDetailsDiv.innerHTML = `
+                <h2>ICD Code: ${params.code}</h2>
+                <p><strong>Description:</strong> ${params.description}</p>
+            `;
+        } else {
+            icdDetailsDiv.innerHTML = "<p class='no-details'>No ICD details found.</p>";
+        }
+    </script>
+     <script src="loginHandle.js"></script>
+</body>
+</html>
